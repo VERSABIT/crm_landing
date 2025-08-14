@@ -43,7 +43,12 @@ var MemStorage = class {
   async createLead(insertLead) {
     const id = this.leadCurrentId++;
     const createdAt = /* @__PURE__ */ new Date();
-    const lead = { ...insertLead, id, createdAt };
+    const lead = {
+      ...insertLead,
+      id,
+      createdAt,
+      phone: insertLead.phone ?? null
+    };
     this.leads.set(id, lead);
     return lead;
   }

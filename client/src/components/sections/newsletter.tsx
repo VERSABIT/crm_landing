@@ -6,8 +6,9 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { motion } from "framer-motion";
 import { apiRequest } from "@/lib/queryClient";
-import { useMutation } from "@tanstack/react-query";
+import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
+import { isApiAvailable } from "@/lib/config";
 import { Form, FormField, FormItem, FormControl, FormMessage } from "@/components/ui/form";
 
 const formSchema = z.object({
@@ -27,18 +28,43 @@ export default function Newsletter() {
     },
   });
 
-  const { mutate, isPending } = useMutation({
-    mutationFn: async (values: FormValues) => {
-      return apiRequest("POST", "/api/newsletters", values);
-    },
-    onSuccess: () => {
-      toast({
-        title: "Subscribed successfully!",
-        description: "Thank you for subscribing to our newsletter.",
-      });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const onSubmit = async (values: FormValues) => {
+    setIsSubmitting(true);
+    
+    try {
+      if (isApiAvailable()) {
+        // Use API in development
+        const response = await apiRequest("POST", "/api/newsletters", values);
+        await response.json();
+        toast({
+          title: "Subscribed successfully!",
+          description: "Thank you for subscribing to our newsletter.",
+        });
+      } else {
+        // Use Netlify Forms in production
+        const formData = new FormData();
+        formData.append('form-name', 'newsletter');
+        formData.append('email', values.email);
+        
+        const response = await fetch('/', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          body: new URLSearchParams(formData as any).toString()
+        });
+        
+        if (response.ok) {
+          toast({
+            title: "Subscribed successfully!",
+            description: "Thank you for subscribing to our newsletter.",
+          });
+        } else {
+          throw new Error('Submission failed');
+        }
+      }
       form.reset();
-    },
-    onError: (error: any) => {
+    } catch (error: any) {
       if (error.message && error.message.includes("409")) {
         toast({
           title: "Already subscribed",
@@ -47,19 +73,22 @@ export default function Newsletter() {
       } else {
         toast({
           title: "Error subscribing",
-          description: (error as Error).message || "Please try again later",
+          description: "Please try again later",
           variant: "destructive",
         });
       }
-    },
-  });
-
-  const onSubmit = (values: FormValues) => {
-    mutate(values);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
     <section ref={ref} className="py-12 bg-gray-900 text-white">
+      {/* Hidden form for Netlify Forms detection */}
+      <form name="newsletter" netlify="true" hidden>
+        <input type="email" name="email" />
+      </form>
+      
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div 
           className="max-w-4xl mx-auto text-center"
@@ -71,7 +100,13 @@ export default function Newsletter() {
           <p className="text-gray-300 mb-8">Join our newsletter for the latest product updates, industry insights, and CRM best practices.</p>
           
           <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="max-w-md mx-auto flex flex-col sm:flex-row gap-3">
+            <form 
+              onSubmit={form.handleSubmit(onSubmit)} 
+              className="max-w-md mx-auto flex flex-col sm:flex-row gap-3"
+              name="newsletter"
+              data-netlify="true"
+            >
+              <input type="hidden" name="form-name" value="newsletter" />
               <FormField
                 control={form.control}
                 name="email"
@@ -80,6 +115,7 @@ export default function Newsletter() {
                     <FormControl>
                       <Input 
                         type="email" 
+                        name="email"
                         placeholder="Your email address" 
                         className="px-4 py-3 rounded-md border-0 focus:ring-2 focus:ring-primary-300 bg-gray-800 text-white placeholder-gray-400"
                         {...field} 
@@ -92,9 +128,9 @@ export default function Newsletter() {
               <Button 
                 type="submit" 
                 className="bg-primary hover:bg-primary/90 px-6 py-3"
-                disabled={isPending}
+                disabled={isSubmitting}
               >
-                {isPending ? "Subscribing..." : "Subscribe"}
+                {isSubmitting ? "Subscribing..." : "Subscribe"}
               </Button>
             </form>
           </Form>
