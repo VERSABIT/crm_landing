@@ -6,6 +6,27 @@
   </head>
   <body>
     <div id="root"></div>
+    
+    <!-- Netlify Forms detection - these hidden forms allow Netlify to detect and process form submissions -->
+    <form name="newsletter" data-netlify="true" hidden>
+      <input type="email" name="email" />
+    </form>
+    
+    <form name="signup" data-netlify="true" hidden>
+      <input type="text" name="fullName" />
+      <input type="text" name="company" />
+      <input type="email" name="email" />
+      <input type="tel" name="phone" />
+      <input type="text" name="companySize" />
+    </form>
+    
+    <form name="contact" data-netlify="true" hidden>
+      <input type="text" name="name" />
+      <input type="email" name="email" />
+      <input type="text" name="subject" />
+      <textarea name="message"></textarea>
+    </form>
+    
     <script type="module" src="/src/main.tsx"></script>
     <!-- This script injects a replit badge into the page, please feel free to remove this line -->
     <script type="text/javascript" src="https://replit.com/public/js/replit-badge-v3.js"></script>

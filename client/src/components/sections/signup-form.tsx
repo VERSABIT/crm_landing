@@ -60,7 +60,7 @@ export default function SignupForm() {
         await response.json();
       } else {
         // Use Netlify Forms in production
-        const formData = new FormData();
+        const formData = new URLSearchParams();
         formData.append('form-name', 'signup');
         Object.keys(leadData).forEach(key => {
           formData.append(key, (leadData as any)[key] || '');
@@ -69,7 +69,7 @@ export default function SignupForm() {
         const response = await fetch('/', {
           method: 'POST',
           headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-          body: new URLSearchParams(formData as any).toString()
+          body: formData.toString()
         });
         
         if (!response.ok) {
@@ -95,15 +95,6 @@ export default function SignupForm() {
 
   return (
     <section id="signup" ref={ref} className="py-16 md:py-24 bg-gray-50">
-      {/* Hidden form for Netlify Forms detection */}
-      <form name="signup" netlify="true" hidden>
-        <input type="text" name="fullName" />
-        <input type="text" name="company" />
-        <input type="email" name="email" />
-        <input type="tel" name="phone" />
-        <input type="text" name="companySize" />
-      </form>
-      
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="max-w-4xl mx-auto">
           <motion.div 
