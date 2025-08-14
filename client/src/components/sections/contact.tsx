@@ -9,9 +9,10 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { motion } from "framer-motion";
 import { apiRequest } from "@/lib/queryClient";
-import { useMutation } from "@tanstack/react-query";
+import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
 import { FaTwitter, FaLinkedinIn, FaFacebookF, FaInstagram } from "react-icons/fa";
+import { isApiAvailable } from "@/lib/config";
 
 const formSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters"),
@@ -36,32 +37,61 @@ export default function Contact() {
     },
   });
 
-  const { mutate, isPending } = useMutation({
-    mutationFn: async (values: FormValues) => {
-      return apiRequest("POST", "/api/contacts", values);
-    },
-    onSuccess: () => {
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const onSubmit = async (values: FormValues) => {
+    setIsSubmitting(true);
+    
+    try {
+      if (isApiAvailable()) {
+        // Use API in development
+        const response = await apiRequest("POST", "/api/contacts", values);
+        await response.json();
+      } else {
+        // Use Netlify Forms in production
+        const formData = new FormData();
+        formData.append('form-name', 'contact');
+        Object.keys(values).forEach(key => {
+          formData.append(key, (values as any)[key] || '');
+        });
+        
+        const response = await fetch('/', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          body: new URLSearchParams(formData as any).toString()
+        });
+        
+        if (!response.ok) {
+          throw new Error('Submission failed');
+        }
+      }
+      
       toast({
         title: "Message sent successfully!",
         description: "We'll get back to you as soon as possible.",
       });
       form.reset();
-    },
-    onError: (error) => {
+    } catch (error) {
       toast({
         title: "Error sending message",
-        description: (error as Error).message || "Please try again later",
+        description: "Please try again later",
         variant: "destructive",
       });
-    },
-  });
-
-  const onSubmit = (values: FormValues) => {
-    mutate(values);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
     <section id="contact" ref={ref} className="py-16 md:py-24 bg-white">
+      {/* Hidden form for Netlify Forms detection */}
+      <form name="contact" netlify="true" hidden>
+        <input type="text" name="name" />
+        <input type="email" name="email" />
+        <input type="text" name="subject" />
+        <textarea name="message"></textarea>
+      </form>
+      
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="max-w-4xl mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
@@ -132,7 +162,13 @@ export default function Contact() {
               <div className="bg-gray-50 rounded-xl p-8 border border-gray-100 shadow-sm">
                 <h3 className="text-xl font-semibold text-gray-900 mb-6">Send Us a Message</h3>
                 <Form {...form}>
-                  <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+                  <form 
+                    onSubmit={form.handleSubmit(onSubmit)} 
+                    className="space-y-6"
+                    name="contact"
+                    data-netlify="true"
+                  >
+                    <input type="hidden" name="form-name" value="contact" />
                     <FormField
                       control={form.control}
                       name="name"
@@ -196,9 +232,9 @@ export default function Contact() {
                     <Button 
                       type="submit" 
                       className="w-full"
-                      disabled={isPending}
+                      disabled={isSubmitting}
                     >
-                      {isPending ? "Sending..." : "Send Message"}
+                      {isSubmitting ? "Sending..." : "Send Message"}
                     </Button>
                   </form>
                 </Form>

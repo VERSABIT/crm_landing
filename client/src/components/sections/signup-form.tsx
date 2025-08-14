@@ -11,9 +11,10 @@ import { useState } from "react";
 import { z } from "zod";
 import { motion } from "framer-motion";
 import { apiRequest } from "@/lib/queryClient";
-import { useMutation } from "@tanstack/react-query";
+
 import { useToast } from "@/hooks/use-toast";
 import { CheckCircle } from "lucide-react";
+import { isApiAvailable } from "@/lib/config";
 
 const formSchema = z.object({
   fullName: z.string().min(2, "Full name must be at least 2 characters"),
@@ -45,33 +46,64 @@ export default function SignupForm() {
     },
   });
 
-  const { mutate, isPending } = useMutation({
-    mutationFn: async (values: FormValues) => {
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const onSubmit = async (values: FormValues) => {
+    setIsSubmitting(true);
+    
+    try {
       const { agreeTerms, ...leadData } = values; // Remove agreeTerms from data to send
-      return apiRequest("POST", "/api/leads", leadData);
-    },
-    onSuccess: () => {
+      
+      if (isApiAvailable()) {
+        // Use API in development
+        const response = await apiRequest("POST", "/api/leads", leadData);
+        await response.json();
+      } else {
+        // Use Netlify Forms in production
+        const formData = new FormData();
+        formData.append('form-name', 'signup');
+        Object.keys(leadData).forEach(key => {
+          formData.append(key, (leadData as any)[key] || '');
+        });
+        
+        const response = await fetch('/', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          body: new URLSearchParams(formData as any).toString()
+        });
+        
+        if (!response.ok) {
+          throw new Error('Submission failed');
+        }
+      }
+      
       setIsSuccess(true);
       toast({
         title: "Trial requested successfully!",
         description: "Check your email to activate your trial account.",
       });
-    },
-    onError: (error) => {
+    } catch (error) {
       toast({
         title: "Error submitting form",
-        description: (error as Error).message || "Please try again later",
+        description: "Please try again later",
         variant: "destructive",
       });
-    },
-  });
-
-  const onSubmit = (values: FormValues) => {
-    mutate(values);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
     <section id="signup" ref={ref} className="py-16 md:py-24 bg-gray-50">
+      {/* Hidden form for Netlify Forms detection */}
+      <form name="signup" netlify="true" hidden>
+        <input type="text" name="fullName" />
+        <input type="text" name="company" />
+        <input type="email" name="email" />
+        <input type="tel" name="phone" />
+        <input type="text" name="companySize" />
+      </form>
+      
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="max-w-4xl mx-auto">
           <motion.div 
@@ -134,7 +166,13 @@ export default function SignupForm() {
                   </div>
                 ) : (
                   <Form {...form}>
-                    <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+                    <form 
+                      onSubmit={form.handleSubmit(onSubmit)} 
+                      className="space-y-6"
+                      name="signup"
+                      data-netlify="true"
+                    >
+                      <input type="hidden" name="form-name" value="signup" />
                       <FormField
                         control={form.control}
                         name="fullName"
@@ -258,9 +296,9 @@ export default function SignupForm() {
                       <Button 
                         type="submit" 
                         className="w-full" 
-                        disabled={isPending}
+                        disabled={isSubmitting}
                       >
-                        {isPending ? "Processing..." : "Start Free Trial"}
+                        {isSubmitting ? "Processing..." : "Start Free Trial"}
                       </Button>
                     </form>
                   </Form>
