@@ -49,7 +49,7 @@ export default function Contact() {
         await response.json();
       } else {
         // Use Netlify Forms in production
-        const formData = new FormData();
+        const formData = new URLSearchParams();
         formData.append('form-name', 'contact');
         Object.keys(values).forEach(key => {
           formData.append(key, (values as any)[key] || '');
@@ -58,7 +58,7 @@ export default function Contact() {
         const response = await fetch('/', {
           method: 'POST',
           headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-          body: new URLSearchParams(formData as any).toString()
+          body: formData.toString()
         });
         
         if (!response.ok) {
@@ -84,14 +84,6 @@ export default function Contact() {
 
   return (
     <section id="contact" ref={ref} className="py-16 md:py-24 bg-white">
-      {/* Hidden form for Netlify Forms detection */}
-      <form name="contact" netlify="true" hidden>
-        <input type="text" name="name" />
-        <input type="email" name="email" />
-        <input type="text" name="subject" />
-        <textarea name="message"></textarea>
-      </form>
-      
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="max-w-4xl mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12">

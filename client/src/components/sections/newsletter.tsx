@@ -44,14 +44,14 @@ export default function Newsletter() {
         });
       } else {
         // Use Netlify Forms in production
-        const formData = new FormData();
+        const formData = new URLSearchParams();
         formData.append('form-name', 'newsletter');
         formData.append('email', values.email);
         
         const response = await fetch('/', {
           method: 'POST',
           headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-          body: new URLSearchParams(formData as any).toString()
+          body: formData.toString()
         });
         
         if (response.ok) {
@@ -84,11 +84,6 @@ export default function Newsletter() {
 
   return (
     <section ref={ref} className="py-12 bg-gray-900 text-white">
-      {/* Hidden form for Netlify Forms detection */}
-      <form name="newsletter" netlify="true" hidden>
-        <input type="email" name="email" />
-      </form>
-      
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div 
           className="max-w-4xl mx-auto text-center"
@@ -115,7 +110,6 @@ export default function Newsletter() {
                     <FormControl>
                       <Input 
                         type="email" 
-                        name="email"
                         placeholder="Your email address" 
                         className="px-4 py-3 rounded-md border-0 focus:ring-2 focus:ring-primary-300 bg-gray-800 text-white placeholder-gray-400"
                         {...field} 
