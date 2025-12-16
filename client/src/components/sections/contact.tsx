@@ -102,7 +102,7 @@ export default function Contact() {
                   </div>
                   <div>
                     <h3 className="text-lg font-medium text-gray-900">Email Us</h3>
-                    <p className="text-gray-600">sales@aiconnectcrm.com</p>
+                    <p className="text-gray-600">sales@versabit.net</p>
                   </div>
                 </div>
                 
@@ -112,7 +112,7 @@ export default function Contact() {
                   </div>
                   <div>
                     <h3 className="text-lg font-medium text-gray-900">Call Us</h3>
-                    <p className="text-gray-600">+1 (800) 123-4567</p>
+                    <p className="text-gray-600"></p>
                   </div>
                 </div>
                 
@@ -122,7 +122,7 @@ export default function Contact() {
                   </div>
                   <div>
                     <h3 className="text-lg font-medium text-gray-900">Visit Us</h3>
-                    <p className="text-gray-600">123 Innovation Way<br />San Francisco, CA 94103</p>
+                    <p className="text-gray-600"></p>
                   </div>
                 </div>
               </div>
