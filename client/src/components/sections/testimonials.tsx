@@ -7,7 +7,7 @@ import { scrollToSection } from "@/lib/animations";
 const testimonials = [
   {
     quote: "The AI capabilities have completely transformed how we understand our customers. We're now able to anticipate needs before customers even express them.",
-    author: "Michael Johnson",
+    author: "Valoria Alejandra",
     role: "CTO, Elevated Digital",
     avatar: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=256&q=80",
     stars: 5
@@ -70,7 +70,7 @@ export default function Testimonials() {
             animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
             transition={{ duration: 0.6, delay: 0.1 }}
           >
-            Discover how companies of all sizes are transforming their customer relationships with AICon<span className="text-accent">nect</span>CRM.
+            Discover how companies of all sizes are transforming their customer relationships with Am<span className="text-accent">Do</span>CRM.
           </motion.p>
         </div>
         
@@ -111,7 +111,7 @@ export default function Testimonials() {
           <div className="grid grid-cols-1 md:grid-cols-4 gap-6 items-center">
             <div className="md:col-span-3">
               <h3 className="text-2xl font-bold text-gray-900 mb-2">Ready to transform your customer relationships?</h3>
-              <p className="text-gray-600">Join thousands of companies using AI to deliver exceptional customer experiences.</p>
+              <p className="text-gray-600">Join in the experience of using AI to deliver remarkable customer experiences.</p>
             </div>
             <div className="md:text-right">
               <Button 
