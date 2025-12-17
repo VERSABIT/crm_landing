@@ -91,7 +91,7 @@ export default function Newsletter() {
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
           transition={{ duration: 0.6 }}
         >
-          <h2 className="text-2xl md:text-3xl font-bold mb-4">Stay Updated on AI-Powered CRM Innovation</h2>
+          <h2 className="text-2xl md:text-3xl font-bold mb-4">Stay Updated on Am<span className="text-accent">Do</span> CRM Innovation</h2>
           <p className="text-gray-300 mb-8">Join our newsletter for the latest product updates, industry insights, and CRM best practices.</p>
           
           <Form {...form}>
