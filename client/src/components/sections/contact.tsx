@@ -93,7 +93,7 @@ export default function Contact() {
               transition={{ duration: 0.7 }}
             >
               <h2 className="text-3xl font-bold text-gray-900 mb-6">Get in Touch</h2>
-              <p className="text-gray-600 mb-8">Have questions about AICon<span className="text-accent">nect</span>CRM? Our team is here to help you find the right solution for your business.</p>
+              <p className="text-gray-600 mb-8">Have questions about Am<span className="text-accent">Do</span>CRM? Our team is here to help you find the right solution for your business.</p>
               
               <div className="space-y-6">
                 <div className="flex items-start">
