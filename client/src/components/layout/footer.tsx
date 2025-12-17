@@ -17,7 +17,7 @@ export default function Footer() {
               onClick={() => handleNavClick("hero")}
             >
               <Brain className="h-6 w-6 text-accent" />
-              <span>AICon<span className="text-accent">nect</span>CRM</span>
+              <span>Am<span className="text-accent">Do</span>CRM</span>
             </div>
             <p className="mb-6">Transforming customer relationships with the power of artificial intelligence. Our platform helps businesses of all sizes deliver exceptional experiences and drive growth.</p>
             <div className="flex space-x-4">
@@ -71,7 +71,7 @@ export default function Footer() {
         </div>
         
         <div className="border-t border-gray-700 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center">
-          <p>© {new Date().getFullYear()} AICon<span className="text-accent">nect</span>CRM. All rights reserved.</p>
+          <p>© {new Date().getFullYear()} Am<span className="text-accent">Do</span>CRM. All rights reserved.</p>
           <div className="mt-4 md:mt-0">
             <a href="#" className="text-gray-400 hover:text-white transition-colors duration-200 mr-4">Privacy</a>
             <a href="#" className="text-gray-400 hover:text-white transition-colors duration-200 mr-4">Terms</a>
