@@ -28,7 +28,7 @@ export default function Hero() {
               </h1>
             </div>
             <p className="text-lg md:text-xl text-gray-600 max-w-2xl">
-              AICon<span className="text-accent">nect</span>CRM combines intelligent automation with deep customer insights to revolutionize how you build relationships and drive growth.
+              Am<span className="text-accent">Do</span>CRM combines intelligent automation with deep customer insights to revolutionize how you build relationships and drive growth.
             </p>
             <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4 pt-4">
               <Button 
@@ -71,7 +71,7 @@ export default function Hero() {
               <img 
                 className="w-full h-auto object-cover"
                 src="https://images.unsplash.com/photo-1552664730-d307ca884978?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1050&q=80"
-                alt="Business professionals using AICon CRM dashboard"
+                alt="Business professionals using AmDo CRM dashboard"
               />
             </div>
           </motion.div>
