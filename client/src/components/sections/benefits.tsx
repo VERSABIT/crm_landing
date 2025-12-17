@@ -75,7 +75,7 @@ export default function Benefits() {
             animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
             transition={{ duration: 0.6, delay: 0.1 }}
           >
-            Our customers are achieving transformative results with AICon<span className="text-accent">nect</span>CRM.
+            Our customers are achieving transformative results with Am<span className="text-accent">Do</span>CRM.
           </motion.p>
         </div>
         
