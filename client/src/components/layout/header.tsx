@@ -45,7 +45,7 @@ export default function Header({ activeSection }: { activeSection: string | null
               }}
             >
               <Brain className="h-6 w-6 text-accent" />
-              <span>AICon<span className="text-accent">nect</span>CRM</span>
+              <span>Am<span className="text-accent">Do</span>CRM</span>
             </a>
           </div>
           
