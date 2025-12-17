@@ -35,7 +35,7 @@ const benefits = [
   {
     percentage: "19%",
     title: "Revenue Growth",
-    description: "Companies using AICon<span class='text-accent'>nect</span>CRM report significant increases in average deal size and overall revenue.",
+    description: "Companies using Am<span class='text-accent'>Do</span>CRM report significant increases in average deal size and overall revenue.",
     color: "border-secondary-500"
   }
 ];
@@ -113,7 +113,7 @@ export default function Benefits() {
               alt="Sarah Chen, VP of Sales"
             />
             <div>
-              <p className="text-gray-600 italic mb-4">"AICon<span className="text-accent">nect</span>CRM has transformed how our sales team works. The AI-powered insights help us focus on the right opportunities at the right time, and our reps love how much administrative work has been automated away."</p>
+              <p className="text-gray-600 italic mb-4">"Am<span className="text-accent">Do</span>CRM has transformed how our sales team works. The AI-powered insights help us focus on the right opportunities at the right time, and our reps love how much administrative work has been automated away."</p>
               <div>
                 <p className="text-gray-900 font-medium">Sarah Chen</p>
                 <p className="text-gray-500">VP of Sales, TechVision Inc.</p>
