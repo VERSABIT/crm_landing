@@ -21,7 +21,6 @@ export default function Hero() {
           >
             <div>
               <Badge variant="secondary" className="mb-4 py-1 px-3 bg-primary-100 text-primary-800 hover:bg-primary-100">
-                AI-Powered CRM Solution
               </Badge>
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-gray-900 leading-tight">
                 Transform Your <span className="gradient-text">Customer Experience</span> With AI
