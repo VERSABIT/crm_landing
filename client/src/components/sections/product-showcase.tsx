@@ -48,7 +48,7 @@ export default function ProductShowcase() {
             animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
             transition={{ duration: 0.6, delay: 0.1 }}
           >
-            See how AICon<span className="text-accent">nect</span>CRM transforms every customer touchpoint with intelligent insights and automation.
+            See how Am<span className="text-accent">Do</span>CRM transforms every customer touchpoint with intelligent insights and automation.
           </motion.p>
         </div>
         
