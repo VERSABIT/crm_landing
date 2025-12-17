@@ -13,7 +13,7 @@ const testimonials = [
     stars: 5
   },
   {
-    quote: "Our sales team has increased productivity by 40% since implementing AIConnectCRM. The intelligent automation handles the repetitive tasks so our team can focus on relationships.",
+    quote: "Our sales team has increased productivity by 40% since implementing AmDoCRM. The intelligent automation handles the repetitive tasks so our team can focus on relationships.",
     author: "Priya Patel",
     role: "Sales Director, GrowthForce",
     avatar: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=256&q=80",
