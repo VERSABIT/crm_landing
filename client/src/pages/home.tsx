@@ -5,7 +5,7 @@ import Hero from "@/components/sections/hero";
 import Features from "@/components/sections/features";
 import ProductShowcase from "@/components/sections/product-showcase";
 import Benefits from "@/components/sections/benefits";
-import Pricing from "@/components/sections/pricing";
+
 import Testimonials from "@/components/sections/testimonials";
 import SignupForm from "@/components/sections/signup-form";
 import Contact from "@/components/sections/contact";
@@ -18,7 +18,6 @@ const sectionIds = [
   "features",
   "showcase",
   "benefits",
-  "pricing",
   "testimonials",
   "signup",
   "contact"
@@ -47,7 +46,6 @@ export default function Home() {
         <Features />
         <ProductShowcase />
         <Benefits />
-        <Pricing />
         <Testimonials />
         <SignupForm />
         <Contact />
